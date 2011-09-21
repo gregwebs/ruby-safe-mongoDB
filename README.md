@@ -35,27 +35,27 @@ A method to make constants out of field names that checks that the fields exist 
 ## Usage
 
 ``` ruby
-class Dog
-  include Mongoid::Document
-  include SafeMongoDB
+    class Dog
+      include Mongoid::Document
+      include SafeMongoDB
 
-  embeds_many :friends
-  field :name
+      embeds_many :friends
+      field :name
 
-  constants_from_mongoid_fields :name, :friends
+      constants_from_mongoid_fields :name, :friends
 
-  def forsake_people
-    human_criteria = friends.where(friend_type: Friend::Human)
-    update_self PULL => {FRIENDS => human_criteria.selector}
-  end
-end
-```
-class Friend
-  Human = 0
-  Dog = 1
-  embedded_in :person
+      def forsake_people
+        human_criteria = friends.where(friend_type: Friend::Human)
+        update_self PULL => {FRIENDS => human_criteria.selector}
+      end
+    end
+    ```
+    class Friend
+      Human = 0
+      Dog = 1
+      embedded_in :person
 
-  field :friend_type
-  field :name
-end
+      field :friend_type
+      field :name
+    end
 ```
