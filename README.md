@@ -1,12 +1,18 @@
 # Overview
 
 Use the raw mongo driver in a safer way by using constants for fields and MongoDB operators.
-You may want to use the raw driver for speed, but there is another safety benefit:
-you understand exactly what is going on in the driver.
-Mongoid provides some nice features, but it can only make a best guess at your intent.
-Sometimes it is important that you know exactly what the query looks like and what it will look like even after upgrading Mongoid.
 
-I am currently just adding functionality as I need it, but it should be very easy to add anything you need- just send a pull request.
+MongoDB does not enforce a schema, which is good when you want schemaless.
+Most of the time you do actually have a schema in mind, and the ODM (Mongoid) enforces that.
+However, sometimes you want to use the raw driver, but still want the safety of an enforced schema- that is what this library tries to provide.
+
+You may want to use the raw driver for speed, but there is another safety benefit to it:
+you understand exactly what is going on in the driver.
+Mongoid provides some nice features, but it can only make a best guess at your intent when you use its higher level interface. And its lower level interfaces are limited.
+Sometimes it is important that you know the query is optimized, and that you can be sure it still will be after you upgrade Mongoid.
+This library is designed to work well with Mongoid (and the mongo ruby driver).
+
+I am currently just adding functionality as I need it, but it should be very easy to add anything you need- just send a pull request. I will release this as a gem eventually.
 
 ## Constants, not strings.
 
@@ -52,3 +58,4 @@ class Friend
   field :friend_type
   field :name
 end
+```
