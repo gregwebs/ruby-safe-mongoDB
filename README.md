@@ -49,7 +49,7 @@ A method to make constants out of field names that checks that the fields exist 
         update_self PULL => {FRIENDS => human_criteria.selector}
       end
     end
-    ```
+
     class Friend
       Human = 0
       Dog = 1
