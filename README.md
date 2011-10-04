@@ -12,7 +12,7 @@ Mongoid provides some nice features, but it can only make a best guess at your i
 Sometimes it is important that you know the query is optimized, and that you can be sure it still will be after you upgrade Mongoid.
 This library is designed to work well with Mongoid (and the mongo ruby driver).
 
-I am currently just adding functionality as I need it, but it should be very easy to add anything you need- just send a pull request. I will release this as a gem eventually.
+I am currently just adding functionality as I need it. All functionality is containted in a single file. I will release this as a gem eventually.
 
 ## Constants, not strings.
 
