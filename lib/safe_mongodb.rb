@@ -1,3 +1,5 @@
+require 'mongoid'
+
 module SafeMongoDB
   PUSH = "$push"
   POP  = "$pop"
@@ -14,12 +16,12 @@ module SafeMongoDB
 
   def self.included into
     if into.ancestors.include? ::Mongoid::Document
-      into.extend         SafeMongoDB::Mongoid::ClassMethods
-      into.send :include, SafeMongoDB::Mongoid::InstanceMethods
+      into.extend         SafeMongoDB::SafeMongoid::ClassMethods
+      into.send :include, SafeMongoDB::SafeMongoid::InstanceMethods
     end
   end
 
-  module Mongoid
+  module SafeMongoid
     # Warning: these instance methods are actually quite unsafe!
     # It updates a Mongoid object outside of Mongoid
     # Then it calls reload, which will wipe out your existing changes!
@@ -76,17 +78,19 @@ module SafeMongoDB
   end
 end
 
-if Mongoid::VERSION =~ /(^1)|(^2\.[012])/
-  module Mongoid
-    class Collection
-      delegate :find_and_modify, :to => :master
-    end
+if defined?(::Mongoid)
+  if !defined?(::Mongoid::VERSION) or ::Mongoid::VERSION =~ /(^1)|(^2\.[012])/
+    module Mongoid
+      class Collection
+        delegate :find_and_modify, :to => :master
+      end
 
-    module Collections
-      class Master
-        def find_and_modify(*args)
-          retry_on_connection_failure do
-            collection.find_and_modify(*args)
+      module Collections
+        class Master
+          def find_and_modify(*args)
+            retry_on_connection_failure do
+              collection.find_and_modify(*args)
+            end
           end
         end
       end
